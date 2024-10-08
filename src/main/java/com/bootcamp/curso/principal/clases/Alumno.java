@@ -7,10 +7,14 @@ import java.util.ArrayList;
 public class Alumno extends Persona{
     private Integer asistencia;
     private ArrayList <Evaluacion> evaluaciones;
-    
+    private Double sumaNotas;
+    private Double promedio;
     public Alumno(){
         super();
-        
+        evaluaciones = new ArrayList<Evaluacion>();
+        sumaNotas = 0.0;
+        setAsistencia();
+        setEvaluaciones();
     }
 
     public Integer getAsistencia() {
@@ -27,9 +31,25 @@ public class Alumno extends Persona{
     }
 
     public void setEvaluaciones() {
-        Evaluacion e = new Evaluacion();
-        evaluaciones.add(e);
+    	
+    	
+    	System.out.println("---Ingreso de notas---");
+    	for( int i = 0; i < 3; i++) {
+    		System.out.println("Ingrese la nota " + (i+1) + ": ");
+    		Evaluacion e = new Evaluacion();
+            evaluaciones.add(e);
+            sumaNotas = sumaNotas + e.getNota();
+    	}
+        
     }
     
+    public Double getPromedio() {
+    	return promedio = sumaNotas / 3;
+    }
+
+	@Override
+	public String toString() {
+		return "Alumno [Run: " + run + ", Nombre: "+ nombre +", Asistencia: " + asistencia + ", evaluaciones: " + evaluaciones + "]";
+	}
     
 }

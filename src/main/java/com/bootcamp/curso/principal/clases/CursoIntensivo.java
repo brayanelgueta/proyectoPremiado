@@ -12,6 +12,7 @@ public class CursoIntensivo implements IProyecto{
     private ArrayList<Alumno> curso;
     
     public CursoIntensivo(){
+    	curso = new ArrayList<Alumno>();
         setCodigo();
         setNombre();
         setAsistenciaMinima();
@@ -51,6 +52,7 @@ public class CursoIntensivo implements IProyecto{
     }
 
     public void setRelator() {
+    	System.out.println("---Datos del relator---");
         relator = new Relator();
     }
 
@@ -59,19 +61,77 @@ public class CursoIntensivo implements IProyecto{
     }
 
     public void setCurso() {
-        Alumno a = new Alumno();
-        curso.add(a);
+    	System.out.println("---Datos del Alumno---");
+    	Integer op = 2;
+
+    	do {
+    		Alumno a = new Alumno();
+            curso.add(a);
+            System.out.println("Desea agregar otro alumno?");
+            System.out.println("1) Si");
+            System.out.println("2) No");
+            op = leer.nextInt();
+            leer.nextLine();
+    	}while(op == 1);
+        
     }
     
     public void buscarAlumno(){
-        
+    
+    	System.out.println("Ingrese el RUN del alumno que desea buscar: ");
+    	String runAlumno = leer.nextLine();
+    	boolean encontrado = false;
+
+    	for (Alumno a : curso) {
+    	   	if (a.getRun().equals(runAlumno)) {
+    	       	System.out.println("Alumno encontrado:");
+    	       	System.out.println("Nombre: " + a.getNombre());
+    	    	System.out.println("Nombre: " + a.getRun());
+    	       	
+    	       	encontrado = true;
+    	       	break;
+    	   	}
+    	}
+
+    	if (!encontrado) {
+    	   	System.out.println("Alumno no encontrado con el RUN ingresado.");
+    	}
+    	
     }
     
     public void eliminarAlumno(){
-        
+    	System.out.println("Ingrese el RUN del alumno que desea eliminar: ");
+    	String runAlumno = leer.nextLine();
+    	boolean encontrado = false;
+
+    	for (Alumno a : curso) {
+    	   	if (a.getRun().equals(runAlumno)) {
+    	   		curso.remove(a);
+    	       	System.out.println("Alumno Eliminado:");
+    	       	encontrado = true;
+    	       	break;
+    	   	}
+    	}
+
+    	if (!encontrado) {
+    	   	System.out.println("Alumno no encontrado con el RUN ingresado.");
+    	}
     }
     
     public void mostrarSF(){
-        
+    	
+    	
+       for(Alumno aux: curso) {
+    	   if(aux.getPromedio() >= 4.0 && aux.getAsistencia() >= asistenciaMinima) {
+    		   System.out.println("Situacion Final de " + aux.getNombre() + ": AA");
+    	   }else if(aux.getPromedio() >= 4.0 && aux.getAsistencia() < asistenciaMinima){
+    		   System.out.println("Situacion Final de " + aux.getNombre() + ": RI");
+    	   }else if(aux.getPromedio() < 4.0 && aux.getAsistencia() >= asistenciaMinima) {
+    		   System.out.println("Situacion Final de " + aux.getNombre() + ": RN");
+    	   }else {
+    		   System.out.println("Situacion Final de " + aux.getNombre() + ": RR");
+    	   }
+       }
+     
     }
 }

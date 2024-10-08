@@ -5,7 +5,7 @@ import com.bootcamp.curso.principal.interfaces.IProyecto;
  * @author Felipe Cuevas
  */
 public class Evaluacion implements IProyecto{
-    private Double nota;
+    private Double nota, notaIngresada;
     
     public Evaluacion(){
         setNota();
@@ -16,8 +16,21 @@ public class Evaluacion implements IProyecto{
     }
 
     public void setNota() {
-        System.out.println("Ingrese la nota: ");
-        nota = leer.nextDouble();
+	    try {
+	    	notaIngresada = leer.nextDouble();
+	        leer.nextLine();
+	        if(notaIngresada >= 1 && notaIngresada <= 7) {
+	        	nota = notaIngresada;
+	        }else {
+	        	throw new ArithmeticException("Debe ingresar una nota entre 1 y 7");
+	        }
+	    }catch(ArithmeticException e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }catch(Exception e) {
+	    	System.out.println("Error: " + e.getMessage());
+	    }
+	        
+        
     }
     
     public Boolean validarNota(Double n){

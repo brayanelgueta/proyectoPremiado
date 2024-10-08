@@ -30,6 +30,7 @@ public class Relator extends Persona{
     public void setSueldo() {
         System.out.println("Ingrese el sueldo: ");
         sueldo = leer.nextDouble();
+        leer.nextLine();
     }
     
     
