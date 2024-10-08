@@ -2,19 +2,13 @@ package com.bootcamp.curso.principal;
 
 import com.bootcamp.curso.principal.interfaces.IProyecto;
 import com.bootcamp.curso.principal.clases.*;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -143,34 +137,59 @@ public class Proyecto_Maven_CursoIntensivo implements IProyecto {
                     	}
                         break;
                     case 6:
-                    	try{
-                            System.out.println("Ingrese el nombre del archivo que desea crear");
-                            String nombreArchivo = leer.nextLine();
-                            String rutaDirectorio = "src/ficheros/";
-                            File directorio = new File(rutaDirectorio);
-                            if(!directorio.exists()) {
-                            	directorio.mkdirs();
-                            }
-                            
-                            String rutaArchivo = rutaDirectorio + nombreArchivo + ".xlsx";
-                            Workbook excel = new XSSFWorkbook();
-                            Sheet hojaExcel = excel.createSheet("Curso 1");
-                           
-                            Row fila = hojaExcel.createRow(0); 
-                          
-                            Cell celda = fila.createCell(2);
-                            celda.setCellValue("Hola profe, se intento, si lo logro despues le hago un push a este repo "); 
-                        
-                            FileOutputStream salidaArchivo = new FileOutputStream(new File(rutaArchivo));
-                            excel.write(salidaArchivo);
-                            salidaArchivo.close();
-                            excel.close();
-                            
-                            System.out.println("Archivo creado correctamente en: " + rutaArchivo);
-                            
-                        }catch(IOException e){
-                            System.err.println("Error: " + e.getMessage());
-                        }
+                    	try {
+                    	    System.out.println("Ingrese el nombre del archivo que desea crear");
+                    	    String nombreArchivo = leer.nextLine();
+                    	    String rutaDirectorio = "src/ficheros/";
+                    	    File directorio = new File(rutaDirectorio);
+                    	    
+              
+                    	    if (!directorio.exists()) {
+                    	        directorio.mkdirs();
+                    	    }
+
+                  
+                    	    String rutaArchivo = rutaDirectorio + nombreArchivo + ".xlsx";
+                    	    Workbook excel = new XSSFWorkbook();
+                    	    Sheet hojaExcel = excel.createSheet("Cursos Intensivos");
+
+                    	 
+                    	    Row filaEncabezado = hojaExcel.createRow(0);
+                    	    filaEncabezado.createCell(0).setCellValue("Codigo Curso");
+                    	    filaEncabezado.createCell(1).setCellValue("Nombre Curso");
+                    	    filaEncabezado.createCell(2).setCellValue("Asistencia Minima");
+                    	    filaEncabezado.createCell(3).setCellValue("Relator");
+                    	    filaEncabezado.createCell(4).setCellValue("Alumno");
+                    	    filaEncabezado.createCell(5).setCellValue("Asistencia Alumno");
+                    	    filaEncabezado.createCell(6).setCellValue("Promedio Alumno");
+
+                    	   
+                    	    int numFila = 1;
+
+                    	    
+                    	    for (CursoIntensivo curso : cursos) {
+                    	        for (Alumno alumno : curso.getCurso()) {
+                    	            Row filaCurso = hojaExcel.createRow(numFila++);
+                    	            filaCurso.createCell(0).setCellValue(curso.getCodigo());
+                    	            filaCurso.createCell(1).setCellValue(curso.getNombre());
+                    	            filaCurso.createCell(2).setCellValue(curso.getAsistenciaMinima());
+                    	            filaCurso.createCell(3).setCellValue(curso.getRelator().getNombre());
+                    	            filaCurso.createCell(4).setCellValue(alumno.getNombre());
+                    	            filaCurso.createCell(5).setCellValue(alumno.getAsistencia());
+                    	            filaCurso.createCell(6).setCellValue(alumno.getPromedio());
+                    	        }
+                    	    }
+
+                    	    FileOutputStream salidaArchivo = new FileOutputStream(new File(rutaArchivo));
+                    	    excel.write(salidaArchivo);
+                    	    salidaArchivo.close();
+                    	    excel.close();
+
+                    	    System.out.println("Archivo creado correctamente en: " + rutaArchivo);
+
+                    	} catch (IOException e) {
+                    	    System.err.println("Error: " + e.getMessage());
+                    	}
                         break;
                     case 7:
                         System.out.println("Finalizando el algoritmo.");
